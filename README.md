@@ -155,10 +155,15 @@ You should see a node (worker node) in Ready state.
  
 
 Create and Deploy Pod:
+
 Create the YAML Manifest File (2048-pod.yaml):
+
 Note: Use any text editor to create the YAML file. If using AWS CloudShell or a Linux terminal:
+
 •	nano 2048-pod.yaml
+
 Paste the following YAML code inside the file:
+
 apiVersion: v1
 kind: Pod
 metadata:
