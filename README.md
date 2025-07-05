@@ -50,19 +50,29 @@ Create another IAM role 'eks-node-grp-role' with 3 policies attached:
 Node Group Role
 
 1.	Create another role
+  
 2.	Choose EKS > EKS - Nodegroup
+  
 3.	Attach the following policies:
+   
 o	AmazonEKSWorkerNodePolicy
+
 o	AmazonEC2ContainerRegistryReadOnly
+
 o	AmazonEKS_CNI_Policy
-4.	Name: eks-node-grp-role
+
+5.	Name: eks-node-grp-role
 
 Launch EC2 Ubuntu 22.04 Instance (if not already done)
 
 You can launch it from the AWS Console:
-•	AMI: Ubuntu 22.04 
+
+•	AMI: Ubuntu 22.04
+
 •	Instance Type: t2.medium or t3.medium (recommended for this task)
+
 •	Enable auto-assign public IP
+
 •	Add a key pair (e.g.,awsdevops)
  
 Connect to Your EC2 Ubuntu Instance
@@ -89,6 +99,7 @@ From your local terminal:
 Configure AWS CLI: 
 
 Install kubectl
+
 •	curl -s https://dl.k8s.io/release/stable.txt
 
 Replace v1.30.1 with the version you got (or use the other current version)
@@ -102,6 +113,7 @@ Replace v1.30.1 with the version you got (or use the other current version)
 
  
 Install eksctl
+
 •	curl –location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz
 
 •	sudo mv eksctl /usr/local/bin
@@ -146,11 +158,15 @@ Cluster creation takes around 15 minutes. Once done:
  
 
 Authentication & Connection:
+
 Update kubeconfig
+
 •	aws eks update-kubeconfig --region ap-south-1 --name bhargav-eks-cluster
 
 Verify Cluster
+
 •	kubectl get nodes
+
 You should see a node (worker node) in Ready state. 
  
 
