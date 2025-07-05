@@ -3,8 +3,12 @@ Kubernetes End to End Project on EKS(Amazon Kubernetes Service)
 Prerequisites
 
 > kubectl – A command line tool for working with Kubernetes clusters. For more information, see Installing or updating kubectl.
+
 > eksctl – A command line tool for working with EKS clusters that automates many individual tasks. For more information, see Installing or updating.
-> AWS CLI – A command line tool for working with AWS services, including Amazon EKS. For more information, see Installing, updating, and uninstalling the AWS CLI in the AWS Command Line Interface User Guide. After installing the AWS CLI, we recommend that you also configure it. For more information, see Quick configuration with aws configure in the AWS Command Line Interface User Guide.
+
+> AWS CLI – A command line tool for working with AWS services, including Amazon EKS. For more information, see Installing, updating, and uninstalling the AWS CLI in the AWS Command Line Interface User Guide.
+
+After installing the AWS CLI, we recommend that you also configure it. For more information, see Quick configuration with aws configure in the AWS Command Line Interface User Guide.
 
 Project Title: Deploying 2048 Game App on Amazon EKS
 
@@ -28,8 +32,11 @@ Application Exposure:
 To make the 2048 game accessible to users, I created a Kubernetes service to expose it securely over the internet. Additionally, I could have implemented an Ingress controller for more advanced routing
 
 Create IAM Roles
+
 You need two IAM roles:
+
 Cluster Role
+
 1.	Go to IAM > Roles > Create Role
 2.	Choose EKS > EKS - Cluster
 3.	Attach AmazonEKSClusterPolicy
@@ -37,8 +44,11 @@ Cluster Role
 
  
 Create another IAM role 'eks-node-grp-role' with 3 policies attached: 
+
 (Allows EC2 instances to call AWS services on your behalf.)
+
 Node Group Role
+
 1.	Create another role
 2.	Choose EKS > EKS - Nodegroup
 3.	Attach the following policies:
@@ -47,7 +57,8 @@ o	AmazonEC2ContainerRegistryReadOnly
 o	AmazonEKS_CNI_Policy
 4.	Name: eks-node-grp-role
 
-Step-3: Launch EC2 Ubuntu 22.04 Instance (if not already done)
+Launch EC2 Ubuntu 22.04 Instance (if not already done)
+
 You can launch it from the AWS Console:
 •	AMI: Ubuntu 22.04 
 •	Instance Type: t2.medium or t3.medium (recommended for this task)
@@ -55,30 +66,50 @@ You can launch it from the AWS Console:
 •	Add a key pair (e.g.,awsdevops)
  
 Connect to Your EC2 Ubuntu Instance
+
 From your local terminal:
-•	sudo apt update 
+
+•	sudo apt update
+
 •	sudo apt upgrade -y
+
 •	curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+
 •	sudo apt install zip
+
 •	sudo apt install unzip -y
+
 •	unzip awscliv2.zip
+
 •	sudo ./aws/install
+
 •	aws –version
+
+
 Configure AWS CLI: 
+
 Install kubectl
 •	curl -s https://dl.k8s.io/release/stable.txt
+
 Replace v1.30.1 with the version you got (or use the other current version)
 •	curl -LO https://dl.k8s.io/release/v1.30.1/bin/linux/amd64/kubectl
+
 •	chmod +x kubectl
+
 •	sudo mv kubectl /usr/local/bin/
+
 •	kubectl version –client
+
  
 Install eksctl
 •	curl –location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz
+
 •	sudo mv eksctl /usr/local/bin
+
 •	eksctl version
  
 Create EKS Cluster:
+
 eksctl create cluster \
 --name 2048-eks-cluster \
 --version 1.29 \
@@ -102,8 +133,11 @@ Note:
 •	Replace nodegroup-name according to your desired name.
 •	Replace (awsdevops) with the exact name of your EC2 key pair created in the AWS Console.
 
+
 Verify Cluster Creation
+
 Cluster creation takes around 15 minutes. Once done:
+
 •	aws eks --region us-east-1 describe-cluster --name 2048-eks-cluster --query "cluster.status"
  
  
